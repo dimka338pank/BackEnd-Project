@@ -2,7 +2,6 @@ import {  ZodError } from 'zod';
 
 export const validateSchema = (schema) => 
     (req, res, next) => {
-    
     try {
         schema.parse(req.body);
         next();
