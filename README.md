@@ -258,3 +258,182 @@ Allows the currently authenticated user to delete their avatar image.
     ```
 
 ---
+
+# 📝 My Tasks API Documentation
+
+Цей розділ описує контракти ендпоінтів для керування особистими завданнями поточного автентифікованого користувача.
+
+> 🔒 **Protected Resource:** Усі запити вимагають **автентифікації** (Bearer Token) у заголовку `Authorization`.
+
+---
+
+## 1. 📋 Get My Tasks API
+
+Retrieves the list of tasks for the currently authenticated user.
+
+* **URL:** `/api/tasks`
+* **Method:** `GET`
+* **Protected resource:** Yes
+
+#### Responses
+
+* **🟢 200 OK**
+    Successful retrieval of the task list.
+    ```json
+    [
+      {
+        "id": "string",
+        "title": "string",
+        "description": "string",
+        "done": "boolean",
+        "files": [
+          {"id": "string", "image": "string (link)"}
+        ]
+      }
+    ]
+    ```
+
+* **🔴 401 Unauthorized**
+    Invalid credentials or missing token.
+    ```json
+    {
+      "error": "User is not authorized"
+    }
+    ```
+
+* **🔴 500 Internal Server Error**
+    ```json
+    {
+      "error": "Internal server error"
+    }
+    ```
+
+---
+
+## 2. 🟢 Create My Task API
+
+Creates a new task for the currently authenticated user.
+
+* **URL:** `/api/tasks`
+* **Method:** `POST`
+* **Protected resource:** Yes
+* **Content-Type:** `multipart/form-data` (for files) or `application/json`
+
+#### Request Body Parameters
+
+| Field | Type | Required | Validation Rules |
+| :--- | :--- | :--- | :--- |
+| `title` | String | Yes | Minimum 2 characters. |
+| `description` | String | No | |
+| `files` | File array | No | Allowed formats: `jpg`, `jpeg`, `png`, `gif`, `webp`. |
+
+#### Responses
+
+* **🟢 201 Created**
+    Successful task creation.
+    ```json
+    {
+      "id": "string",
+      "title": "string",
+      "description": "string",
+      "done": "boolean",
+      "files": [
+        {"id": "string", "image": "string (link)"}
+      ]
+    }
+    ```
+
+* **🔴 400 Bad Request**
+    Validation failed.
+    ```json
+    {
+      "errors": [
+        "Invalid title: minimum 2 characters",
+        "Invalid files: allowed formats are jpg, jpeg, png, gif, webp"
+      ]
+    }
+    ```
+
+* **🔴 401 Unauthorized**
+    Invalid credentials or missing token.
+    ```json
+    {
+      "error": "User is not authorized"
+    }
+    ```
+
+* **🔴 500 Internal Server Error**
+    ```json
+    {
+      "error": "Internal server error"
+    }
+    ```
+
+---
+
+## 3. ❌ Delete My Task API
+
+Allows the currently authenticated user to delete their task.
+
+* **URL:** `/api/tasks/{taskId}`
+* **Method:** `DELETE`
+* **Protected resource:** Yes
+
+#### Request Fields (Path Variables)
+
+| Field | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `taskId` | String | Yes | The ID of the task to be deleted. |
+
+#### Responses
+
+* **🟢 200 OK**
+    Task successfully deleted.
+    ```json
+    {
+      "deleted": true
+    }
+    ```
+
+* **🔴 400 Bad Request**
+    Validation error for path variables (e.g., missing `taskId`).
+    ```json
+    {
+      "errors": [
+        "Invalid taskId: taskId is required"
+      ]
+    }
+    ```
+
+* **🔴 401 Unauthorized**
+    Invalid credentials or missing token.
+    ```json
+    {
+      "error": "User is not authorized"
+    }
+    ```
+
+* **🔴 403 Forbidden**
+    User attempting to delete a task they did not create.
+    ```json
+    {
+      "error": "User does not have access to this resource"
+    }
+    ```
+
+* **🔴 404 Not Found**
+    Task with the specified ID was not found.
+    ```json
+    {
+      "errors": [
+        "Invalid taskId: no task found with this taskId"
+      ]
+    }
+    ```
+
+* **🔴 500 Internal Server Error**
+    ```json
+    {
+      "error": "Internal server error"
+    }
+    ```
