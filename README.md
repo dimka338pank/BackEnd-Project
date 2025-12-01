@@ -120,7 +120,7 @@ Authenticates a user and returns a **JWT access token**.
     {
       "error": "Internal server error"
     }
-
+```
 
     # 👤 Profile API Documentation
 
