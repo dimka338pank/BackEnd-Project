@@ -1,4 +1,4 @@
-# 📚 API Documentation
+#  API Documentation
 
 This documentation describes the REST API endpoints for User Authentication, Profile Management, and Task Management.
 
@@ -126,8 +126,9 @@ All endpoints in this section are **protected resources** and require a valid **
 
 Retrieves the currently authenticated user's profile data.
 
-* **URL:** `/me`
+* **Endpoint:** `/api/users/me`
 * **Method:** `GET`
+* **protected resource:** `YES`
 
 #### Responses
 
