@@ -116,7 +116,7 @@ Authenticates a user and returns a **JWT access token**.
 
 ---
 
-## 👤 Profile API Documentation
+## Profile Management API
 
 **Base URL:** `/api/users`
 
