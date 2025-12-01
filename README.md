@@ -128,7 +128,7 @@ Retrieves the currently authenticated user's profile data.
 
 * **Endpoint:** `/api/users/me`
 * **Method:** `GET`
-* **protected resource:** `YES`
+* **protected resource:** `Yes`
 
 #### Responses
 
@@ -161,9 +161,9 @@ Retrieves the currently authenticated user's profile data.
 
 Updates the currently authenticated user's profile data (name and optional avatar image).
 
-* **URL:** `/me`
+* **Endpoint:** `/api/users/me`
 * **Method:** `PUT`
-* **Content-Type:** `multipart/form-data` or `application/json`
+* **protected resource:** `Yes`
 
 #### Request Body Parameters
 
@@ -214,8 +214,9 @@ Updates the currently authenticated user's profile data (name and optional avata
 
 Allows the currently authenticated user to delete their avatar image.
 
-* **URL:** `/me/avatar`
+* **URL:** `/api/users/me/avatar`
 * **Method:** `DELETE`
+* **protected resource:** `Yes`
 
 #### Responses
 
@@ -244,17 +245,13 @@ Allows the currently authenticated user to delete their avatar image.
 
 ---
 
-## 📝 My Tasks API Documentation
-
-Цей розділ описує контракти ендпоінтів для керування особистими завданнями поточного автентифікованого користувача.
-
-> 🔒 **Protected Resource:** Усі запити вимагають **автентифікації** (Bearer Token) у заголовку `Authorization`.
+## Task Management API
 
 ### 1. 📋 Get My Tasks API
 
 Retrieves the list of tasks for the currently authenticated user.
 
-* **URL:** `/api/tasks`
+* **Endpoint:** `/api/tasks`
 * **Method:** `GET`
 * **Protected resource:** Yes
 
@@ -293,11 +290,11 @@ Retrieves the list of tasks for the currently authenticated user.
 
 ---
 
-### 2. 🟢 Create My Task API
+### 2.  Create Task
 
 Creates a new task for the currently authenticated user.
 
-* **URL:** `/api/tasks`
+* **Endpoint:** `/api/tasks`
 * **Method:** `POST`
 * **Protected resource:** Yes
 * **Content-Type:** `multipart/form-data` (for files) or `application/json`
@@ -354,11 +351,11 @@ Creates a new task for the currently authenticated user.
 
 ---
 
-### 3. ❌ Delete My Task API
+### 3. Delete Task
 
 Allows the currently authenticated user to delete their task.
 
-* **URL:** `/api/tasks/{taskId}`
+* **Endpoint:** `/api/tasks/{taskId}`
 * **Method:** `DELETE`
 * **Protected resource:** Yes
 
