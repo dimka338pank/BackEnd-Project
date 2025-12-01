@@ -1,6 +1,6 @@
-# API Documentation
+# 📚 API Documentation
 
-This documentation describes the REST API endpoints for User Authentication and Profile Management.
+This documentation describes the REST API endpoints for User Authentication, Profile Management, and Task Management.
 
 ---
 
@@ -20,15 +20,14 @@ Registers a new user and returns a **JWT access token** upon success.
 
 | Field | Type | Required | Validation Rules |
 | :--- | :--- | :--- | :--- |
-| email | String | Yes | Must match regex: `/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/` |
-| name | String | Yes | Minimum 2 characters. |
-| password | String | Yes | Minimum 8 characters; must include letters. |
-| avatar | File | No | Allowed formats: `jpg`, `jpeg`, `png`, `gif`, `webp`. |
+| `email` | String | Yes | Must match regex: `/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/` |
+| `name` | String | Yes | Minimum 2 characters. |
+| `password` | String | Yes | Minimum 8 characters; must include letters. |
+| `avatar` | File | No | Allowed formats: `jpg`, `jpeg`, `png`, `gif`, `webp`. |
 
 #### Responses
 
 * **🟢 201 Created**
-    
     User successfully registered.
     ```json
     {
@@ -37,7 +36,6 @@ Registers a new user and returns a **JWT access token** upon success.
     ```
 
 * **🔴 400 Bad Request**
-    
     Validation failed.
     ```json
     {
@@ -51,7 +49,6 @@ Registers a new user and returns a **JWT access token** upon success.
     ```
 
 * **🔴 409 Conflict**
-    
     Duplicate resource.
     ```json
     {
@@ -60,7 +57,6 @@ Registers a new user and returns a **JWT access token** upon success.
     ```
 
 * **🔴 500 Internal Server Error**
-    
     ```json
     {
       "error": "Internal server error"
@@ -79,13 +75,12 @@ Authenticates a user and returns a **JWT access token**.
 
 | Field | Type | Required | Validation Rules |
 | :--- | :--- | :--- | :--- |
-| email | String | Yes | Must match regex: `/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/` |
-| password | String | Yes | Minimum 8 characters; must include letters. |
+| `email` | String | Yes | Must match regex: `/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/` |
+| `password` | String | Yes | Minimum 8 characters; must include letters. |
 
 #### Responses
 
 * **🟢 200 OK**
-    
     Login successful.
     ```json
     {
@@ -94,7 +89,6 @@ Authenticates a user and returns a **JWT access token**.
     ```
 
 * **🔴 400 Bad Request**
-    
     Validation failed.
     ```json
     {
@@ -106,7 +100,6 @@ Authenticates a user and returns a **JWT access token**.
     ```
 
 * **🔴 401 Unauthorized**
-    
     Invalid credentials.
     ```json
     {
@@ -115,14 +108,15 @@ Authenticates a user and returns a **JWT access token**.
     ```
 
 * **🔴 500 Internal Server Error**
-    
     ```json
     {
       "error": "Internal server error"
     }
-```
+    ```
 
-    # 👤 Profile API Documentation
+---
+
+## 👤 Profile API Documentation
 
 **Base URL:** `/api/users`
 
@@ -138,7 +132,6 @@ Retrieves the currently authenticated user's profile data.
 #### Responses
 
 * **🟢 200 OK**
-    
     Successful retrieval of profile data.
     ```json
     {
@@ -149,7 +142,6 @@ Retrieves the currently authenticated user's profile data.
     ```
 
 * **🔴 401 Unauthorized**
-    
     Invalid credentials or missing token.
     ```json
     {
@@ -158,7 +150,6 @@ Retrieves the currently authenticated user's profile data.
     ```
 
 * **🔴 500 Internal Server Error**
-    
     ```json
     {
       "error": "Internal server error"
@@ -183,7 +174,6 @@ Updates the currently authenticated user's profile data (name and optional avata
 #### Responses
 
 * **🟢 200 OK**
-    
     Successful profile data update.
     ```json
     {
@@ -194,7 +184,6 @@ Updates the currently authenticated user's profile data (name and optional avata
     ```
 
 * **🔴 400 Bad Request**
-    
     Validation failed.
     ```json
     {
@@ -206,7 +195,6 @@ Updates the currently authenticated user's profile data (name and optional avata
     ```
 
 * **🔴 401 Unauthorized**
-    
     Invalid credentials.
     ```json
     {
@@ -215,7 +203,6 @@ Updates the currently authenticated user's profile data (name and optional avata
     ```
 
 * **🔴 500 Internal Server Error**
-    
     ```json
     {
       "error": "Internal server error"
@@ -232,7 +219,6 @@ Allows the currently authenticated user to delete their avatar image.
 #### Responses
 
 * **🟢 200 OK**
-    
     Avatar successfully deleted.
     ```json
     {
@@ -241,7 +227,6 @@ Allows the currently authenticated user to delete their avatar image.
     ```
 
 * **🔴 401 Unauthorized**
-    
     Invalid credentials.
     ```json
     {
@@ -250,25 +235,21 @@ Allows the currently authenticated user to delete their avatar image.
     ```
 
 * **🔴 500 Internal Server Error**
-    
     ```json
     {
       "error": "Internal server error"
     }
     ```
-    ```
 
 ---
 
-# 📝 My Tasks API Documentation
+## 📝 My Tasks API Documentation
 
 Цей розділ описує контракти ендпоінтів для керування особистими завданнями поточного автентифікованого користувача.
 
 > 🔒 **Protected Resource:** Усі запити вимагають **автентифікації** (Bearer Token) у заголовку `Authorization`.
 
----
-
-## 1. 📋 Get My Tasks API
+### 1. 📋 Get My Tasks API
 
 Retrieves the list of tasks for the currently authenticated user.
 
@@ -311,7 +292,7 @@ Retrieves the list of tasks for the currently authenticated user.
 
 ---
 
-## 2. 🟢 Create My Task API
+### 2. 🟢 Create My Task API
 
 Creates a new task for the currently authenticated user.
 
@@ -372,7 +353,7 @@ Creates a new task for the currently authenticated user.
 
 ---
 
-## 3. ❌ Delete My Task API
+### 3. ❌ Delete My Task API
 
 Allows the currently authenticated user to delete their task.
 
