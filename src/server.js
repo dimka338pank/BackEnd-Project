@@ -9,7 +9,7 @@ app.use(express.json());
 app.use("/api/auth", router);
 
 app.get("/", (req, res) => {
-    res.send("Welcome to the Pelmene Project API");
+    res.send("Welcome to the sqlite Project API");
 });
 
 const start = async () => {
