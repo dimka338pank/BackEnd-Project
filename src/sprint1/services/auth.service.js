@@ -2,7 +2,7 @@ import { User } from '../models/user.model.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = "YOUR_SECRET_KEY_HERE";
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export const registerUser = async (username, email, password) => {
 
@@ -11,10 +11,7 @@ export const registerUser = async (username, email, password) => {
     if (!password) throw new Error('Password is required');
 
     const existingUser = await User.findOne({ where: { email } });
-
-    if (existingUser) {
-        throw new Error('User already exists');
-    }
+    if (existingUser)throw new Error('User already exists');
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
