@@ -1,16 +1,44 @@
+import { User } from '../../sprint1/models/user.model.js';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import { users } from '../data/users.js';
-const JWT_SECRET = 'YOUR_SECRET_KEY_HERE';
 
-export const createUser = async (username, email, password) => {
-    if (!username) {
-        throw new Error('Username is required');
+export const GetProfileId = async (UserID) => {
+const user = await User.findByPk(UserID, {
+        attributes: [
+            'email', 
+            ['username', 'name']
+        ],
+        raw: true,
+    });
+    if (!user)throw new Error('User not found');
+    return {
+        email: user.email,
+        name: user.name
     }
-    if (!email) {
-        throw new Error('Email is required');
+}
+export const UpdateProfile = async (userId, updateData) => {
+    const dataToUpdate = { ...updateData };
+    const user = await User.findByPk(userId);
+    if (!user)throw new Error('User not found');
+    
+    if (dataToUpdate.password)dataToUpdate.password = await bcrypt.hash(dataToUpdate.password, 10);
+
+    if (dataToUpdate.email){
+        const existingUser = await User.findOne({where: { email: dataToUpdate.email } });
+        if (existingUser && existingUser.id !== userId)throw new Error('Email already in use');
     }
-    if (!password) {
-        throw new Error('Password is required');
-    }
+const [updatedRows] = await User.update(dataToUpdate, {
+        where: {id: userId},
+    });
+
+    if (updatedRows === 0)throw new Error('Update failed or no changes provided');
+
+    const updatedUser = await User.findByPk(userId, {
+        attributes: ['email', ['username', 'name']],
+        raw: true,
+    });
+
+    return {
+        email: updatedUser.email,
+        name: updatedUser.name
+    };
 }
