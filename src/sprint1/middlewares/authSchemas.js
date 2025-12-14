@@ -11,8 +11,7 @@ export const RegistrationUserSchema = z.object({
         .regex(EmailRegex, { message: "Invalid email" }),
 
     username: z.string().trim().min(2, "Invalid username: minimum 2 characters"),
-
-  password: z
+    password: z
         .string()
         .min(8, "Invalid password: minimum 8 characters")
         .regex(PasswordLettersRegex, "Invalid password: must include letters"),
@@ -23,7 +22,7 @@ export const LoginUserSchema = z.object({
         .trim()
         .min(1, "Email is required")
         .regex(EmailRegex, { message: "Invalid email" }),
-	  password: z.string()
+	password: z.string()
         .min(8, "Invalid password: minimum 8 characters")
         .regex(PasswordLettersRegex, "Invalid password: must include letters"),
 });

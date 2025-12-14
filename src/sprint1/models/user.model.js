@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../db/dbConect.js";
-
 export const User = sequelize.define("User", {
   id: {
     type: DataTypes.INTEGER,
