@@ -4,15 +4,9 @@ import { UserTask } from '../../sprint1/models/user-task.model.js';
 import { User } from '../../sprint1/models/user.model.js';
 export const CreateTask = async (data, userId) => {
     const { title, description} = data;
-<<<<<<< HEAD
     let task = await Task.findOne({
     where: { title, description }
   }); 
-=======
-    const task = await Task.findOne({
-    where: { title, description }
-  });
->>>>>>> d8d7f131789c8f822cddae3c713810eb3fc2861c
   if (!task) {
     task = await Task.create({
       title,
@@ -47,7 +41,6 @@ const tasks = await Task.findAll({
   });
 
   return tasks;
-<<<<<<< HEAD
 }
 
 export const DeleteTask = async (userId, taskId) => {
@@ -70,6 +63,4 @@ export const DeleteTask = async (userId, taskId) => {
   });
   }
     return true;
-=======
->>>>>>> d8d7f131789c8f822cddae3c713810eb3fc2861c
 }
