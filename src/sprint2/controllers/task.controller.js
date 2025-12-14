@@ -22,30 +22,23 @@ export const getTasks = async (req, res) => {
 }
 
 export const deleteTask = async (req, res) => {
-    const { taskId } = req.params; 
-    const userId = req.userId;
-    if (!taskId || isNaN(parseInt(taskId))) { 
-        return res.status(400).json({
-            errors: ["Invalid taskId: taskId is required and must be a number in the URL"]
-        });
-    }
+  const {taskId} = req.params   
+  try {
+       const result = await DeleteTask(req.userId, taskId)
 
-    try {
-        await DeleteTask(userId, taskId); 
-        return res.status(200).json({ deleted: true });
-        
+       return res.status(200).json({ deleted: result });
     } catch (err) {
-        console.error("Delete Task Error:", err.message);
-        if (err.message === 'FORBIDDEN') {
-            return res.status(403).json({ 
-                error: "User does not have access to this resource" 
-            });
+      if (!taskId) {
+        return res.status(400).json({
+          errors: ["Invalid taskId: taskId is required"]});
         }
-        if (err.message === "NOT_FOUND"){
-            return res.status(404).json({ 
-                errors: ["Invalid taskId: no task found with this taskId"]
-            }); 
-        }
-        return res.status(500).json({ error: "Internal server error" });
+      if (err.message === 'FORBIDDEN') {
+        return res.status(403).json({ error: "User does not have access to this resource" });
+      }
+      if (err.message === "NOT_FOUND"){
+       return res.status(404).json({ error: "Invalid taskId: no task found with this taskId" }); 
+      }
+      console.error(err);
+      return res.status(500).json({ error: "Internal server error" });
     }
 }
