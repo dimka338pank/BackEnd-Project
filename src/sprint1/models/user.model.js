@@ -25,3 +25,4 @@ export const User = sequelize.define("User", {
     tableName: 'users',
     timestamps: true
 });
+//
