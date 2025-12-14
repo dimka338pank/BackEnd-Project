@@ -17,3 +17,9 @@ export const UpdateProfileSchema = z.object({
         .regex(PasswordLettersRegex, "Invalid password: must include letters")
         .optional(), 
 });
+export const CreateTaskSchema = z.object({
+    title: z.string()
+    .min(2, "Invalid title: minimum 2 characters"),
+    description: z.string()
+    .optional(),
+});
