@@ -26,12 +26,13 @@ export const deleteTask = async (req, res) => {
     const userId = req.userId;
     if (!taskId || isNaN(parseInt(taskId))) { 
         return res.status(400).json({
-            error: "Invalid taskId: taskId is required and must be a number in the URL"
+            errors: ["Invalid taskId: taskId is required and must be a number in the URL"]
         });
     }
+
     try {
         await DeleteTask(userId, taskId); 
-        return res.status(204).send(); 
+        return res.status(200).json({ deleted: true });
         
     } catch (err) {
         console.error("Delete Task Error:", err.message);
@@ -42,7 +43,7 @@ export const deleteTask = async (req, res) => {
         }
         if (err.message === "NOT_FOUND"){
             return res.status(404).json({ 
-                error: "Invalid taskId: no task found with this taskId" 
+                errors: ["Invalid taskId: no task found with this taskId"]
             }); 
         }
         return res.status(500).json({ error: "Internal server error" });
