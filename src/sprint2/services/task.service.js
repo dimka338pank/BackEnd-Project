@@ -43,32 +43,6 @@ const tasks = await Task.findAll({
   return tasks;
 }
 
-export const UpdateTask = async (userId, taskId, data) => {
-  const { done, title, description } = data;
-
-  const task = await Task.findByPk(taskId);
-  if (!task) throw new Error("NOT_FOUND");
-
-  const relation = await UserTask.findOne({
-    where: { userId, taskId }
-  });
-  if (!relation) throw new Error("FORBIDDEN");
-
-  if (done !== undefined) task.done = done;
-  if (title !== undefined) task.title = title;
-  if (description !== undefined) task.description = description;
-
-  await task.save();
-
-  return {
-    id: task.id,
-    title: task.title,
-    description: task.description,
-    done: task.done,
-    createdAt: task.createdAt
-  };
-};
-
 export const DeleteTask = async (userId, taskId) => {
   const existingTask = await Task.findByPk(taskId);
   if (!existingTask) throw new Error('NOT_FOUND');
